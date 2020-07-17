@@ -4,3 +4,6 @@ dist/
 CSV2QTI.spec
 *.sublime-project
 *.sublime-workspace
+__pycache__
+*.zip
+.DS_Store

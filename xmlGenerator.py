@@ -6,26 +6,40 @@ import os
 def saveXML(question, filename):
 	doc, tag, text = Doc().tagtext();
 	question.correct_answer = 'A' + question.correct_answer
+	label_long = (question.title_full[:75] + '..') if len(question.title_full) > 75 else question.title_full
 	doc.asis('<?xml version="1.0" encoding="UTF-8"?>'\
-		'<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0"'\
+		'<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p2"'\
 		' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'\
-		' xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p0 http://www.imsglobal.org/xsd/imsqti_v2p0.xsd"' \
+		' xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p2 http://www.imsglobal.org/xsd/qti/qtiv2p2/imsqti_v2p2.xsd"' \
 		' identifier="' + question.title_id + '"' \
-		' title="' + question.title + '"' \
+		' title="' + label_long + '"' \
 		' adaptive="false"' \
 		' timeDependent="false">'
 		)
+	# doc.asis('<?xml version="1.0" encoding="UTF-8"?>'\
+	# 	'<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p0"'\
+	# 	' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'\
+	# 	' xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p0 http://www.imsglobal.org/xsd/imsqti_v2p0.xsd"' \
+	# 	' identifier="' + question.title_id + '"' \
+	# 	' title="' + label_long + '"' \
+	# 	' adaptive="false"' \
+	# 	' timeDependent="false">'
+	# 	)
 
 	with tag('responseDeclaration', identifier='RESPONSE', cardinality='single', baseType='identifier'):
 		with tag('correctResponse'):
 			with tag('value'):
 				text(question.correct_answer)
-	with tag('outcomeDeclaration', identifier='SCORE', cardinality='single', baseType='integer'):
+	with tag('outcomeDeclaration', identifier='SCORE', cardinality='single', baseType='integer', normalMaximum='1'):
 		with tag('defaultValue'):
 			with tag('value'):
 				text(0)
+	with tag('outcomeDeclaration', identifier='MAXSCORE', cardinality='single', baseType='float'):
+		with tag('defaultValue'):
+			with tag('value'):
+				text(1)
 	with tag('itemBody'):
-		with tag('choiceInteraction', responseIdentifier='RESPONSE', shuffle='true', maxChoices='1'):
+		with tag('choiceInteraction', responseIdentifier='RESPONSE', shuffle='true', maxChoices='1', minChoices='1'):
 			with tag('prompt'):
 				text(question.question)
 			for i in range(0, len(question.answers)):

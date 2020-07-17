@@ -3,6 +3,7 @@ class Question:
 	def __init__(self):
 		self.title = ''
 		self.title_id = ''
+		self.title_full = ''
 		self.correct_answer = ''
 		self.question = ''
 		self.answers = []
