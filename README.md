@@ -27,3 +27,10 @@ This will output a `geography.zip` file which can be imported in TAO as QTI Pack
 Usage with `tab` set as delimiter and `"` as quote character
 
 `CSV2QTI geography.csv geography Geography_Basic --delimiter='\t' --quotechar='"'`
+
+Hint:
+Use following sites for quick format conversion
+https://tableconvert.com
+http://json2table.com/
+https://convertcase.net/
+
