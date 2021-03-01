@@ -6,4 +6,6 @@ CSV2QTI.spec
 *.sublime-workspace
 __pycache__
 *.zip
+*.bat
+*.csv
 .DS_Store
