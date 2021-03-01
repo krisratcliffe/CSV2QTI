@@ -47,8 +47,26 @@ def saveXML(question, filename):
 				answer = question.answers[i]
 				with tag('simpleChoice', identifier=code):
 					text(answer)
-	with tag('responseProcessing', template="http://www.imsglobal.org/question/qti_v2p0/rptemplates/match_correct"):
-		pass
+					pass
+	doc.asis('<responseProcessing>'\
+    '<responseCondition>'\
+    '   <responseIf>'\
+    '        <match>'\
+    '            <variable identifier="RESPONSE"/>'\
+    '            <correct identifier="RESPONSE"/>'\
+    '        </match>'\
+    '        <setOutcomeValue identifier="SCORE">'\
+    '            <baseValue baseType="integer">1</baseValue>'\
+    '        </setOutcomeValue>'\
+    '    </responseIf>'\
+    '    <responseElse>'\
+    '        <setOutcomeValue identifier="SCORE">'\
+    '            <baseValue baseType="integer">0</baseValue>'\
+    '        </setOutcomeValue>'\
+    '    </responseElse>'\
+    '</responseCondition>'\
+'</responseProcessing>')
+
 
 	doc.asis('</assessmentItem>')
 	xmlfile = open(filename, 'w')
